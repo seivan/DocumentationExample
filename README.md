@@ -15,18 +15,18 @@
 
 ### On heroku we have two environments running
 
-> fone2012-staging
+> staging
 
-> fone2012
+> production
 
 
 ### Url to staging
 
-> http://fone2012-staging.herokuapp.com/api/v2/
+> http://<app_name>-staging.herokuapp.com/api/v2/
 
 ### Url to production
 
-> http://fone2012.herokuapp.com/api/v2/
+> http://<app_name>.herokuapp.com/api/v2/
 
 
 ## Authentication rules

@@ -17,16 +17,16 @@
 
 > staging
 
-> production
+> productions
 
 
 ### Url to staging
 
-> http://<app_name>-staging.herokuapp.com/api/v2/
+> http://staging.herokuapp.com/api/v2/
 
 ### Url to production
 
-> http://<app_name>.herokuapp.com/api/v2/
+> http://lol.herokuapp.com/api/v2/
 
 
 ## Authentication rules
@@ -131,13 +131,16 @@ So if you hit
 
 > All objects will have a is_deleted boolean to delete from the clients. News, Events and Photos 
 
+> There is a deletions end point for all the classes in case that is the way you want go. Search for Deletions in the readme
+
 
 ## Default scopes
 
-### Event default_scope order(:start_date)
+### Event default_scope order("start_date DESC")
 
-### News default_scope order(:published_at)
+### News default_scope order("published_at DESC")
 
+### Photo default_scope order("published_at DESC")
 
 # Current endpoints
 
@@ -520,5 +523,19 @@ x.properties => {"X"=>"[\"LOL\", \"X\"]"}
       t.add :properties
       t.add :is_deleted 
       t.add :created_at
+    end
+```
+
+## Deletions
+
+### GET /api/v2/deletions(.:format)?class=Photo|Event|News
+
+> Will return id's of the objects reserved for deletions
+
+> returns
+
+```ruby
+    api_accessible :v2_public do |t|
+      t.add :id
     end
 ```

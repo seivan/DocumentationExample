@@ -4,29 +4,29 @@
 
 ### Current Version on staging
 
-> v2
+> v3
 
 ### Current Version on production
 
-> v2
+> v3
 
 
 ## Environments and URL's
 
 ### On heroku we have two environments running
 
-> staging
+> fone2012-staging
 
-> productions
+> fone2012
 
 
 ### Url to staging
 
-> http://staging.herokuapp.com/api/v2/
+> http://fone2012-staging.herokuapp.com/api/v3/
 
 ### Url to production
 
-> http://lol.herokuapp.com/api/v2/
+> http://fone2012.herokuapp.com/api/v3/
 
 
 ## Authentication rules
@@ -117,10 +117,10 @@ params = {
 > All the data returned will be embedded in the key named after the controller.
 So if you hit 
 
-* /api/v2/**events**.json
+* /api/v3/**events**.json
   * You will get your event objects inside {:**events** => [...]}
 
-* /api/v2/**session**.json
+* /api/v3/**session**.json
   * You will get your session object inside {:**session** => [...]}
 
 ### Deletion
@@ -147,15 +147,16 @@ So if you hit
 
 ## Events
 
-> GET    /api/v2/events(.:format)  
+> GET    /api/v3/events(.:format)  
 
 > JSONP support with ?callback=
 
 > returns
 
 ```ruby
-    api_accessible :v1_public do |t|
+    api_accessible :v3_public do |t|
       t.add :id
+      t.add :insing_id
       t.add :title
       t.add :body
       t.add :latitude
@@ -172,6 +173,7 @@ So if you hit
       t.add :updated_at
       t.add :is_published
       t.add :is_deleted
+
     end
 ```
 
@@ -180,16 +182,16 @@ So if you hit
 
 > Limited to 4 event objects as per request
 
-> GET   /api/v2/events(.:format)?callback=myCallback&today=true
+> GET   /api/v3/events(.:format)?callback=myCallback&today=true
 
 or
 
-> GET   /api/v2/events(.:format)?callback=myCallback&date="2012-08-21"
+> GET   /api/v3/events(.:format)?callback=myCallback&date="2012-08-21"
 
 > returns
 
 ```ruby
-    api_accessible :v1_public do |t|
+    api_accessible :v3_public do |t|
       t.add :id
       t.add :title
       t.add :start_date
@@ -200,7 +202,7 @@ or
 
 ## Session
 
-> POST   /api/v2/session(.:format)
+> POST   /api/v3/session(.:format)
 
 #### For Facebook
 
@@ -218,7 +220,7 @@ params = {
 ```ruby
 
 
-    api_accessible :v1_private do |t|
+    api_accessible :v3_private do |t|
       t.add :provider_id
       t.add :provider_token
       t.add :user
@@ -226,7 +228,7 @@ params = {
       t.add :error_message
       t.add :provider_name
       t.add :user
-          api_accessible :v1_private do |t|
+          api_accessible :v3_private do |t|
             t.add :id
             t.add :name
             t.add :email
@@ -248,7 +250,7 @@ params = {
 
 ## Predictions
 
-### GET    /api/v2/predictions/:id(.:format)
+### GET    /api/v3/predictions/:id(.:format)
 
 > pre-end Prediction requests before end_date will only return answers and questions
 
@@ -261,18 +263,18 @@ params = {
 > returns
 
 ```ruby
-    api_accessible :v1_public do |t|
+    api_accessible :v3_public do |t|
       t.add :id
       t.add :title
       t.add :start_date_unixtime
       t.add :end_date_unixtime
       t.add :round 
       t.add :questions
-          api_accessible :v1_public do |t|
+          api_accessible :v3_public do |t|
             t.add :id
             t.add :title
             t.add :answers
-                api_accessible :v1_public do |t|
+                api_accessible :v3_public do |t|
                   t.add :id
                   t.add :title
                 end
@@ -280,7 +282,7 @@ params = {
     end
 ``` 
 
-### POST   /api/v2/predictions/:prediction_id/submission(.:format)
+### POST   /api/v3/predictions/:prediction_id/submission(.:format)
 
 > requires_auth! 
 
@@ -295,18 +297,18 @@ params = {
 > returns
 
 ```ruby
-    api_accessible :v1_public do |t|
+    api_accessible :v3_public do |t|
       t.add :id
       t.add :title
       t.add :start_date_unixtime
       t.add :end_date_unixtime
       t.add :round 
       t.add :questions
-          api_accessible :v1_public do |t|
+          api_accessible :v3_public do |t|
             t.add :id
             t.add :title
             t.add :answers
-                api_accessible :v1_public do |t|
+                api_accessible :v3_public do |t|
                   t.add :id
                   t.add :title
                   t.add :users_count
@@ -319,7 +321,7 @@ params = {
  
 ## Predictions
 
-### POST   /api/v2/sharings/(.:format)
+### POST   /api/v3/sharings/(.:format)
 
 > requires_auth! 
 
@@ -335,18 +337,18 @@ params = {
 > returns
 
 ```ruby
-    api_accessible :v1_public do |t|
+    api_accessible :v3_public do |t|
       t.add :id
       t.add :title
       t.add :start_date_unixtime
       t.add :end_date_unixtime
       t.add :round 
       t.add :questions
-          api_accessible :v1_public do |t|
+          api_accessible :v3_public do |t|
             t.add :id
             t.add :title
             t.add :answers
-                api_accessible :v1_public do |t|
+                api_accessible :v3_public do |t|
                   t.add :id
                   t.add :title
                   t.add :users_count
@@ -359,18 +361,19 @@ params = {
 
 ## Photos
 
-### GET   /api/v2/events(.:format)?albums=true
+### GET   /api/v3/events(.:format)?albums=true
 
 > returns
 
 ```ruby
-    api_accessible :v1_public_album do |t|
+    api_accessible :v3_public_album do |t|
       t.add :id
+      t.add :insing_id
       t.add :title
       t.add :photos
       t.add :is_deleted
 
-      api_accessible :v1_public do |t|
+      api_accessible :v3_public do |t|
         t.add :id
         t.add :created_at
         t.add :updated_at
@@ -380,6 +383,7 @@ params = {
         t.add :thumb_url
         t.add :normal_url
         t.add :is_deleted
+        t.add :is_published
     end
 
   end
@@ -388,7 +392,7 @@ params = {
 
 > Photo per event
 
-### GET   /api/v2/events/:event_id/photos(.:format)
+### GET   /api/v3/events/:event_id/photos(.:format)
 
 > --------
 
@@ -396,19 +400,19 @@ params = {
 
 > requires_auth!
 
-### GET   /api/v2/session/photos(.:format)
+### GET   /api/v3/session/photos(.:format)
 
 > --------
 
 > Most liked photo limited by 10
 
-### GET   /api/v2/likes/photos(.:format)
+### GET   /api/v3/likes/photos(.:format)
 
 
 > returns
 
 ```ruby
-    api_accessible :v1_public do |t|
+    api_accessible :v3_public do |t|
         t.add :id
         t.add :created_at
         t.add :updated_at
@@ -418,11 +422,36 @@ params = {
         t.add :thumb_url
         t.add :normal_url
         t.add :is_deleted
+        t.add :state
+    end
+```  
+
+> --------
+
+> Get a single photo
+
+### GET   /api/v3/events/:event_id/photos/:photo_id(.:format)
+
+> returns
+
+```ruby
+    api_accessible :v3_public do |t|
+        t.add :id
+        t.add :created_at
+        t.add :updated_at
+        t.add :event_id
+        t.add :user_id
+        t.add :photo_likes_count
+        t.add :thumb_url
+        t.add :normal_url
+        t.add :is_deleted
+        t.add :state
     end
 ```  
 
 
-## POST /api/v2/events/:event_id/photos(.:format)
+
+### POST /api/v3/events/:event_id/photos(.:format)
 
 > requires_auth!
 
@@ -437,10 +466,13 @@ params = {
 
 > The event_id needs to exist and needs to be in the past or 1 hour in the future. 
 
+> This is a lazy post request, meaning that it will not process immediatly. It has three states. 
+"Queued" | "Processing" | "Finished" 
+
 > returns
 
 ```ruby
-    api_accessible :v1_public do |t|
+    api_accessible :v3_public do |t|
         t.add :id
         t.add :created_at
         t.add :updated_at
@@ -450,17 +482,18 @@ params = {
         t.add :thumb_url
         t.add :normal_url
         t.add :is_deleted
+        t.add :
     end
 ```
 
 ## Likes
 
-### POST /api/v2/events/:event_id/photos/:photo_id/likes(.:format)
+### POST /api/v3/events/:event_id/photos/:photo_id/likes(.:format)
 
 > returns
 
 ```ruby
-    api_accessible :v1_public do |t|
+    api_accessible :v3_public do |t|
         t.add :id
         t.add :created_at
         t.add :updated_at
@@ -477,14 +510,14 @@ params = {
 ## News
 
 
-### GET /api/v2/news(.:format)
+### GET /api/v3/news(.:format)
 
 > Use If-Modified-Since header with the timestamp that is returned from a 200 response.
 > Make sure to save the timestamp! 
 
 > Example
 ```
-curl -I  http://fone2012-staging.herokuapp.com/api/v2/news.json --header 'If-Modified-Since: Thu, 06 Sep 2012 06:55:04 GMT'
+curl -I  http://fone2012-staging.herokuapp.com/api/v3/news.json --header 'If-Modified-Since: Thu, 06 Sep 2012 06:55:04 GMT'
 ```
 
 > If up to date, it will return a 304
@@ -511,7 +544,7 @@ x.properties => {"X"=>"[\"LOL\", \"X\"]"}
 > returns
 
 ```ruby
-    api_accessible :v2_public do |t|
+    api_accessible :v3_public do |t|
       t.add :id
       t.add :title
       t.add :sub_title
@@ -528,14 +561,14 @@ x.properties => {"X"=>"[\"LOL\", \"X\"]"}
 
 ## Deletions
 
-### GET /api/v2/deletions(.:format)?class=Photo|Event|News
+### GET /api/v3/deletions(.:format)?class=Photo|Event|News
 
 > Will return id's of the objects reserved for deletions
 
 > returns
 
 ```ruby
-    api_accessible :v2_public do |t|
+    api_accessible :v3_public do |t|
       t.add :id
     end
 ```
